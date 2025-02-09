@@ -1,3 +1,4 @@
+import { ExpenseData } from "@/utils/interface"
 import { createSlice } from "@reduxjs/toolkit"
 
 // Get All Files
@@ -15,12 +16,7 @@ import { createSlice } from "@reduxjs/toolkit"
 // )
 
 const initialState: {
-  data: Array<{
-    date: string
-    amount: number
-    mode: "online" | "offline"
-    type: "-" | "+"
-  }>
+  data: Array<ExpenseData>
   loading: boolean
   error: any
   status: string
@@ -44,9 +40,12 @@ const expenseTrackerSlice = createSlice({
     setExpenseData: (state, action) => {
       state.data = action.payload
     },
+    updateData: (state, action) => {
+      state.data = [...state.data, action.payload]
+    },
   },
 })
 
-export const { setExpenseData, setError, setLoading } =
+export const { setExpenseData, setError, setLoading, updateData } =
   expenseTrackerSlice.actions
 export default expenseTrackerSlice.reducer

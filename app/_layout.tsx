@@ -1,4 +1,3 @@
-import { handleGetExpenseData } from "@/firebase"
 import { ReduxProvider } from "@/redux/provider"
 import { useFonts } from "expo-font"
 import { Stack } from "expo-router"
@@ -8,6 +7,8 @@ import { useEffect } from "react"
 import ToastManager from "toastify-react-native"
 import "react-native-reanimated"
 import "../global.css"
+import { GestureHandlerRootView } from "react-native-gesture-handler"
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -43,18 +44,22 @@ export default function RootLayout() {
 
   return (
     <ReduxProvider>
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-      <ToastManager
-        position="bottom"
-        animationStyle="zoomInOut"
-        showCloseIcon={false}
-        showProgressBar={false}
-      />
+      <GestureHandlerRootView>
+        <BottomSheetModalProvider>
+          <Stack>
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+          <ToastManager
+            position="bottom"
+            animationStyle="zoomInOut"
+            showCloseIcon={false}
+            showProgressBar={false}
+          />
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
     </ReduxProvider>
   )
 }

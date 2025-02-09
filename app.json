@@ -35,7 +35,7 @@
           "image": "./assets/images/icon1.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#fff"
+          "backgroundColor": "#62b6c5"
         }
       ]
     ],

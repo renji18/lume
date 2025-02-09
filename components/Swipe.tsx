@@ -1,5 +1,6 @@
 import { router } from "expo-router"
 import React, { useState } from "react"
+import { View } from "react-native"
 import {
   GestureHandlerRootView,
   PanGestureHandler,
@@ -95,7 +96,7 @@ const Swipe = () => {
   }
 
   return (
-    <GestureHandlerRootView
+    <View
       className="bg-theme-white items-center justify-center"
       style={{
         height: BUTTON_HEIGHT,
@@ -129,12 +130,12 @@ const Swipe = () => {
         />
       </PanGestureHandler>
       <Animated.Text
-        className="self-center text-xl font-bold text-theme-black font-gummy tracking-wider z-0"
+        className="self-center text-xl text-theme-black font-gb tracking-wider z-0"
         style={[AnimatedStyles.text]}
       >
         Let's get started
       </Animated.Text>
-    </GestureHandlerRootView>
+    </View>
   )
 }
 

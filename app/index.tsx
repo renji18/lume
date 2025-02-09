@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native"
+import { Text, Image } from "react-native"
 import React, { useEffect } from "react"
 import { MyDispatch, MySelector } from "@/redux/store"
 import { handleGetExpenseData } from "@/firebase"
@@ -44,7 +44,7 @@ const Welcome = () => {
   return (
     <SafeAreaView className="bg-black h-screen justify-center items-center gap-20">
       <Image source={icon} className="w-[80vw] h-[80vw]" />
-      <Text className="text-theme-white text-4xl font-italic tracking-wide text-center px-5 leading-relaxed">
+      <Text className="text-theme-white text-4xl font-gsbi tracking-wide text-center px-5 leading-relaxed">
         Your Life, Your Flow, Your Lume.
       </Text>
       <Swipe />
