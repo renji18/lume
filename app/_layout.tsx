@@ -4,11 +4,11 @@ import { Stack } from "expo-router"
 import * as SplashScreen from "expo-splash-screen"
 import { StatusBar } from "expo-status-bar"
 import { useEffect } from "react"
-import ToastManager from "toastify-react-native"
+import Toast from "react-native-toast-message"
 import "react-native-reanimated"
-import "../global.css"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
+import "../global.css"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -52,12 +52,7 @@ export default function RootLayout() {
             <Stack.Screen name="+not-found" />
           </Stack>
           <StatusBar style="auto" />
-          <ToastManager
-            position="bottom"
-            animationStyle="zoomInOut"
-            showCloseIcon={false}
-            showProgressBar={false}
-          />
+          <Toast />
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </ReduxProvider>

@@ -8,10 +8,10 @@ import {
   setExpenseData,
   setLoading,
 } from "@/redux/slices/expenseTrackerSlice"
-import { Toast } from "toastify-react-native"
 import Swipe from "@/components/Swipe"
 import { SafeAreaView } from "react-native-safe-area-context"
 import icon from "../assets/images/icon1.png"
+import MyToast from "@/utils/MyToast"
 
 const Welcome = () => {
   const dispatch = useDispatch<MyDispatch>()
@@ -37,7 +37,7 @@ const Welcome = () => {
   // effect to show toast in case of error
   useEffect(() => {
     if (!error) return
-    Toast.error(error)
+    MyToast("error", error)
     dispatch(setError(null))
   }, [error])
 

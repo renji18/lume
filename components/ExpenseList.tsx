@@ -5,11 +5,9 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 
 const ExpenseList = ({
   currentDate,
-  width,
   currentData,
 }: {
   currentDate: string
-  width: number
   currentData?: Array<ExpenseData>
 }) => {
   const [totalExpense, setTotalExpense] = useState<number>(0)
@@ -23,10 +21,10 @@ const ExpenseList = ({
   }, [currentData])
 
   return (
-    <View style={{ width }} className={`h-full items-center pt-10 gap-10`}>
+    <View className={`h-full w-screen items-center pt-10 gap-10`}>
       <Text className="font-gb text-theme-white text-4xl">{currentDate}</Text>
       <Text
-        className={`font-gm text-4xl ${
+        className={`font-gsb tracking-wide text-4xl ${
           totalExpense?.toString().startsWith("-")
             ? "text-rose-500"
             : "text-emerald-500"

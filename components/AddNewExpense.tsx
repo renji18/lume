@@ -18,13 +18,13 @@ import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group"
 import { MyDispatch, MySelector } from "@/redux/store"
 import { handleUpdateExpenseData } from "@/firebase"
 import { useDateFormatter } from "@/utils/dateFormatter"
-import { Toast } from "toastify-react-native"
 import {
   setError,
   setLoading,
   updateData,
 } from "@/redux/slices/expenseTrackerSlice"
 import { useDispatch } from "react-redux"
+import MyToast from "@/utils/MyToast"
 
 interface Props {
   currentDate: string
@@ -105,8 +105,31 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
   const handleNewData = (key: string, val: any) =>
     setNewEntry((prev) => ({ ...prev, [key]: val }))
 
+  // fn to reset data
+  const resetData = () => {
+    setNewEntry({
+      amount: 0,
+      mode: "online",
+      type: "+",
+      reason: "",
+    })
+  }
+
   // fn to add new expense data
   const handleAdd = async () => {
+    if (amountRef.current === 0) {
+      dismiss()
+      resetData()
+      MyToast("error", "Please enter a valid amount")
+      return
+    }
+    if (reasonRef.current === "") {
+      dismiss()
+      resetData()
+      MyToast("error", "Please enter a valid reason")
+      return
+    }
+
     dispatch(setLoading(true))
     const newData = {
       ...newEntry,
@@ -118,16 +141,11 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
     if (typeof res !== "string" && res?.error) {
       dispatch(setError(res?.msg))
     } else {
-      typeof res === "string" && Toast.success(res)
+      typeof res === "string" && MyToast("success", res)
       dispatch(updateData(newData))
     }
     dispatch(setLoading(false))
-    setNewEntry({
-      amount: 0,
-      mode: "online",
-      type: "+",
-      reason: "",
-    })
+    resetData()
     reasonRef.current = ""
     amountRef.current = 0
     dismiss()
@@ -136,7 +154,7 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
   // effect to show toast in case of error
   useEffect(() => {
     if (!error) return
-    Toast.error(error)
+    MyToast("error", error)
     dispatch(setError(null))
   }, [error])
 
