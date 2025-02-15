@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from "react-native"
+import { View, Text, FlatList, TouchableOpacity } from "react-native"
 import React, { useEffect, useState } from "react"
 import { ExpenseData } from "@/utils/interface"
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
@@ -6,9 +6,11 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 const ExpenseList = ({
   currentDate,
   currentData,
+  setShowCalendar,
 }: {
   currentDate: string
   currentData?: Array<ExpenseData>
+  setShowCalendar: (arg: boolean) => void
 }) => {
   const [totalExpense, setTotalExpense] = useState<number>(0)
 
@@ -21,8 +23,13 @@ const ExpenseList = ({
   }, [currentData])
 
   return (
-    <View className={`h-full w-screen items-center pt-10 gap-10`}>
-      <Text className="font-gb text-theme-white text-4xl">{currentDate}</Text>
+    <View className={`h-full w-screen items-center`}>
+      <TouchableOpacity
+        onPress={() => setShowCalendar(true)}
+        className="border-2 rounded-full my-6 px-4 py-2 border-theme-blue"
+      >
+        <Text className="font-gb text-theme-white text-4xl">{currentDate}</Text>
+      </TouchableOpacity>
       <Text
         className={`font-gsb tracking-wide text-4xl ${
           totalExpense?.toString().startsWith("-")
@@ -33,7 +40,7 @@ const ExpenseList = ({
         ₹{totalExpense}
       </Text>
 
-      <View className="flex-1 w-full">
+      <View className="flex-1 w-full mt-10">
         <FlatList
           data={currentData}
           keyExtractor={(_, index) => index.toString()}
