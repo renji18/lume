@@ -30,7 +30,7 @@ export function MyCalendar({
   }
 
   return (
-    <View className="flex-1 w-[80%] bg-black mt-10">
+    <View className="flex-1 w-[80%] bg-theme-blue rounded-lg px-3 mt-12">
       <Calendar.List
         calendarMonthHeaderHeight={30}
         calendarSpacing={60}

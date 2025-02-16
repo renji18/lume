@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { MySelector } from "@/redux/store"
 import { ExpenseData } from "@/utils/interface"
@@ -13,6 +13,7 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet"
 import AntDesign from "@expo/vector-icons/AntDesign"
 import ExpenseList from "@/components/ExpenseList"
 import { MyCalendar } from "@/components/Calendar"
+import { useFocusEffect } from "@react-navigation/native"
 
 const Expense = () => {
   const bottomSheetRef = useRef<BottomSheetModal>(null)
@@ -60,8 +61,15 @@ const Expense = () => {
     return () => clearTimeout(timer)
   }, [])
 
+  // to reset showing calendar
+  useFocusEffect(
+    useCallback(() => {
+      setShowCalendar(false)
+    }, [])
+  )
+
   return (
-    <SafeAreaView className="bg-theme-black flex-1 w-full items-center relative">
+    <SafeAreaView className="bg-theme-white flex-1 w-full items-center relative">
       {!showCalendar && (
         <View className="relative">
           <TouchableOpacity
@@ -112,7 +120,7 @@ const Expense = () => {
           onPress={handleOpenBottomSheet}
           name="pluscircle"
           size={50}
-          color="#62b6c5"
+          color="#233337"
           className="absolute rounded-full bottom-5 right-5 z-20"
         />
       )}
