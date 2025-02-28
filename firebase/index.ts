@@ -10,6 +10,13 @@ const expenseDBRef = doc(
   process.env.EXPO_PUBLIC_EXPENSE_DOC_NAME || ""
 )
 
+// the subscriptionsDB reference
+const subscriptionsDBRef = doc(
+  firestore,
+  process.env.EXPO_PUBLIC_COLLECTION_NAME || "",
+  process.env.EXPO_PUBLIC_SUBSCRIPTIONS_DOC_NAME || ""
+)
+
 // get expense data
 export async function handleGetExpenseData() {
   try {
@@ -30,6 +37,16 @@ export async function handleUpdateExpenseData(
       data: [...currentData, newData],
     })
     return "Expenses updated successfully"
+  } catch (error) {
+    return { msg: errorHandler(error), error: true }
+  }
+}
+
+// get subscriptions
+export async function handleGetSubscriptionsData() {
+  try {
+    const docSnap = await getDoc(subscriptionsDBRef)
+    return docSnap.data()?.["data"]
   } catch (error) {
     return { msg: errorHandler(error), error: true }
   }

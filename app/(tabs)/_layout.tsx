@@ -3,6 +3,7 @@ import React from "react"
 import { Tabs } from "expo-router"
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5"
 import Ionicons from "@expo/vector-icons/Ionicons"
+import MaterialIcons from "@expo/vector-icons/MaterialIcons"
 
 const TabLayout = () => {
   return (
@@ -25,13 +26,7 @@ const TabLayout = () => {
         options={{
           title: "Expense",
           headerShown: false,
-          tabBarIcon: ({
-            color,
-            focused,
-          }: {
-            color: string
-            focused: boolean
-          }) => (
+          tabBarIcon: ({ color }: { color: string }) => (
             <View className="items-center justify-center gap-2 w-full">
               <FontAwesome5 name="dollar-sign" size={24} color={color} />
             </View>
@@ -43,15 +38,21 @@ const TabLayout = () => {
         options={{
           title: "Analyze",
           headerShown: false,
-          tabBarIcon: ({
-            color,
-            focused,
-          }: {
-            color: string
-            focused: boolean
-          }) => (
+          tabBarIcon: ({ color }: { color: string }) => (
             <View className="items-center justify-center gap-2 w-full">
               <Ionicons name="stats-chart" size={24} color={color} />
+            </View>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="subscriptions"
+        options={{
+          title: "Subscriptions",
+          headerShown: false,
+          tabBarIcon: ({ color }: { color: string }) => (
+            <View className="items-center justify-center gap-2 w-full">
+              <MaterialIcons name="subscriptions" size={24} color={color} />
             </View>
           ),
         }}

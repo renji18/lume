@@ -20,7 +20,9 @@ const Expense = () => {
 
   const dateToday = new Date(Date.now())
 
-  const { data } = MySelector((state) => state.expense)
+  const {
+    data: { expenses },
+  } = MySelector((state) => state.expense)
 
   const [currentDate, setCurrentDate] = useState<{ ui: string; use: string }>({
     ui: uiDateFormatter(dateToday),
@@ -46,25 +48,30 @@ const Expense = () => {
 
   // to filter and set current date data
   useEffect(() => {
-    if (!data) return
+    if (!expenses) return
     if (!currentDate) return
-    const filterCurrentData = data.filter((d) => d.date === currentDate.use)
+    const filterCurrentData = expenses.filter((d) => d.date === currentDate.use)
     setCurrentData(filterCurrentData)
-  }, [currentDate, data])
+  }, [currentDate, expenses])
 
   // to hide the bars
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowBars(false)
-    }, 1000)
+    }, 600)
 
     return () => clearTimeout(timer)
   }, [])
 
-  // to reset showing calendar
+  // to reset showing calendar, navigate to current date, show bars again
   useFocusEffect(
     useCallback(() => {
+      setShowBars(true)
       setShowCalendar(false)
+      setCurrentDate({
+        ui: uiDateFormatter(dateToday),
+        use: useDateFormatter(dateToday),
+      })
     }, [])
   )
 

@@ -6,10 +6,12 @@ import MonthlyAnalysis from "@/components/MonthlyAnalysis"
 import YearlyAnalysis from "@/components/YearlyAnalysis"
 
 const Analyze = () => {
-  const { data } = MySelector((state) => state.expense)
+  const {
+    data: { expenses },
+  } = MySelector((state) => state.expense)
 
   const years = Object.values(
-    data.reduce((acc, item) => {
+    expenses.reduce((acc, item) => {
       const [_, __, year] = item.date.split("/")
       const amount = Number(item.amount) * (item.type === "+" ? 1 : -1)
 
@@ -33,7 +35,7 @@ const Analyze = () => {
       setMonthlyData(null)
       return
     }
-    const allMonthsData = data.filter((item) => {
+    const allMonthsData = expenses.filter((item) => {
       const [_, __, year] = item.date.split("/")
       if (year === selectedYear) return item
     })

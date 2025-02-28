@@ -17,11 +17,10 @@ import {
 import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group"
 import { MyDispatch, MySelector } from "@/redux/store"
 import { handleUpdateExpenseData } from "@/firebase"
-import { useDateFormatter } from "@/utils/dateFormatter"
 import {
   setError,
   setLoading,
-  updateData,
+  updateExpenseData,
 } from "@/redux/slices/expenseTrackerSlice"
 import { useDispatch } from "react-redux"
 import MyToast from "@/utils/MyToast"
@@ -37,7 +36,11 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
   const { dismiss } = useBottomSheetModal()
 
   const dispatch = useDispatch<MyDispatch>()
-  const { data, error, loading } = MySelector((state) => state.expense)
+  const {
+    data: { expenses },
+    error,
+    loading,
+  } = MySelector((state) => state.expense)
 
   const reasonRef = useRef<string>("")
   const amountRef = useRef<number>(0)
@@ -137,12 +140,12 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
       reason: reasonRef.current,
       amount: amountRef.current,
     }
-    const res = await handleUpdateExpenseData(data, newData)
+    const res = await handleUpdateExpenseData(expenses, newData)
     if (typeof res !== "string" && res?.error) {
       dispatch(setError(res?.msg))
     } else {
       typeof res === "string" && MyToast("success", res)
-      dispatch(updateData(newData))
+      dispatch(updateExpenseData(newData))
     }
     dispatch(setLoading(false))
     resetData()

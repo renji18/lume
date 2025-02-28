@@ -5,3 +5,11 @@ export interface ExpenseData {
   type: "-" | "+"
   reason: string
 }
+
+export interface SubscriptionData {
+  type: "monthly" | "yearly"
+  from: string
+  to?: string
+  name: string
+  amount: number
+}

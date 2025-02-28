@@ -1,27 +1,16 @@
-import { ExpenseData } from "@/utils/interface"
+import { ExpenseData, SubscriptionData } from "@/utils/interface"
 import { createSlice } from "@reduxjs/toolkit"
 
-// Get All Files
-// export const getAllFiles = createAsyncThunk(
-//   "getAllFiles",
-//   async (data: { eventId: string; userId: string }, { rejectWithValue }) => {
-//     try {
-//       const response = await getAllFilesOfEvents(data?.eventId, data?.userId)
-//       return response
-//     } catch (error: any) {
-//       toast.error("Error Fetching All Files")
-//       return rejectWithValue(error.response)
-//     }
-//   }
-// )
-
 const initialState: {
-  data: Array<ExpenseData>
+  data: {
+    expenses: Array<ExpenseData>
+    subscription: Array<SubscriptionData>
+  }
   loading: boolean
   error: any
   status: string
 } = {
-  data: [],
+  data: { expenses: [], subscription: [] },
   loading: false,
   error: null,
   status: "",
@@ -38,14 +27,26 @@ const expenseTrackerSlice = createSlice({
       state.error = action.payload
     },
     setExpenseData: (state, action) => {
-      state.data = action.payload
+      state.data.expenses = action.payload
     },
-    updateData: (state, action) => {
-      state.data = [...state.data, action.payload]
+    setSubscriptionsData: (state, action) => {
+      state.data.subscription = action.payload
+    },
+    updateExpenseData: (state, action) => {
+      state.data.expenses = [...state.data.expenses, action.payload]
+    },
+    updateSubscriptionsData: (state, action) => {
+      state.data.subscription = [...state.data.subscription, action.payload]
     },
   },
 })
 
-export const { setExpenseData, setError, setLoading, updateData } =
-  expenseTrackerSlice.actions
+export const {
+  setExpenseData,
+  setError,
+  setLoading,
+  updateExpenseData,
+  setSubscriptionsData,
+  updateSubscriptionsData,
+} = expenseTrackerSlice.actions
 export default expenseTrackerSlice.reducer
