@@ -28,20 +28,20 @@ const YearlyAnalysis = ({
           <TouchableOpacity
             onPress={() => setSelectedYear(item.year)}
             className={`${
-              item.totalExpense < 0 ? "bg-rose-500" : "bg-emerald-500"
+              item.totalExpense < 0 ? "bg-rose-600" : "bg-emerald-600"
             } px-6 py-10 rounded-lg flex-row items-center justify-between my-10`}
           >
             <View>
-              <Text className="font-gi text-lg text-theme-black">Year</Text>
-              <Text className="font-gb text-2xl text-theme-black">
+              <Text className="font-gi text-lg text-theme-white">Year</Text>
+              <Text className="font-gb text-2xl text-theme-white">
                 {item.year}
               </Text>
             </View>
             <View>
-              <Text className="font-gi text-lg text-theme-black">
+              <Text className="font-gi text-lg text-theme-white">
                 Total Expense
               </Text>
-              <Text className="font-gb text-2xl text-theme-black">
+              <Text className="font-gb text-2xl text-theme-white">
                 ₹{item.totalExpense}
               </Text>
             </View>

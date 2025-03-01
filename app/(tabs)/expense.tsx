@@ -63,10 +63,9 @@ const Expense = () => {
     return () => clearTimeout(timer)
   }, [])
 
-  // to reset showing calendar, navigate to current date, show bars again
+  // to reset showing calendar, navigate to current date
   useFocusEffect(
     useCallback(() => {
-      setShowBars(true)
       setShowCalendar(false)
       setCurrentDate({
         ui: uiDateFormatter(dateToday),

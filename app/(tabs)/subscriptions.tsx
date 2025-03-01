@@ -1,8 +1,8 @@
 import { View, Text, FlatList } from "react-native"
-import React from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { MySelector } from "@/redux/store"
 import { getDateJs, uiDateFormatter } from "@/utils/dateFormatter"
+import { monthsSince } from "@/utils/montsPassed"
 
 const Subscriptions = () => {
   const {
@@ -25,27 +25,31 @@ const Subscriptions = () => {
             </Text>
           }
           renderItem={({ item }) => (
-            <View className="my-10 px-6 py-8 rounded-lg bg-theme-blue">
+            <View className="my-10 px-6 py-8 rounded-lg bg-theme-blue/70">
               <View className="flex-row justify-between items-center">
                 <View>
-                  <Text className="capitalize text-theme-white font-gmi text-xl">
+                  <Text className="capitalize text-theme-black font-gmi text-xl">
                     {item.type} from
                   </Text>
-                  <Text className="text-theme-white font-gm text-2xl mt-1.5">
+                  <Text className="text-theme-black font-gsb text-2xl mt-1.5">
                     {uiDateFormatter(getDateJs(item.from))}
                   </Text>
                 </View>
                 <View>
-                  <Text className="text-theme-white font-gmi text-3xl">
+                  <Text className="text-theme-black font-gbi text-3xl">
                     {item.name}
                   </Text>
-                  <Text className="text-theme-white font-gm text-2xl text-right mt-1.5">
+                  <Text className="text-theme-black font-gm text-2xl text-right mt-1.5">
                     ₹{item.amount}
                   </Text>
                 </View>
               </View>
+              <Text className="mt-5 text-center font-gsbi text-xl text-theme-black">
+                Total spent ₹{monthsSince(getDateJs(item.from)) * item.amount}{" "}
+                for {monthsSince(getDateJs(item.from))} months
+              </Text>
               {item?.to && (
-                <Text className="mt-5 text-center text-theme-black font-gsbi text-xl">
+                <Text className="mt-5 text-center text-theme-black font-gm text-xl">
                   Ended on {item.to}
                 </Text>
               )}
