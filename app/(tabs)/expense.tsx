@@ -75,17 +75,17 @@ const Expense = () => {
   )
 
   return (
-    <SafeAreaView className="bg-theme-white flex-1 w-full items-center relative">
+    <SafeAreaView className="bg-beige flex-1 w-full items-center relative">
       {!showCalendar && (
         <View className="relative">
           <TouchableOpacity
             className={`absolute top-0 bottom-0 w-28 justify-center items-center left-0 z-10 transition-all duration-500 ease-linear ${
-              showBars ? "bg-theme-blue/70" : "bg-transparent"
+              showBars ? "bg-blue/70" : "bg-transparent"
             }`}
             onPress={() => changeDate(-1)}
           >
             {showBars && (
-              <Text className="text-2xl text-theme-black font-gsb tracking-wider">
+              <Text className="text-2xl text-dark_slate font-gsb tracking-wider">
                 Prev
               </Text>
             )}
@@ -99,12 +99,12 @@ const Expense = () => {
 
           <TouchableOpacity
             className={`absolute top-0 bottom-0 w-28 justify-center items-center right-0 z-10 transition-all duration-500 ease-linear ${
-              showBars ? "bg-theme-blue/70" : "bg-transparent"
+              showBars ? "bg-blue/70" : "bg-transparent"
             }`}
             onPress={() => changeDate(1)}
           >
             {showBars && (
-              <Text className="text-2xl text-theme-black font-gsb tracking-wider">
+              <Text className="text-2xl text-dark_slate font-gsb tracking-wider">
                 Next
               </Text>
             )}
@@ -126,7 +126,7 @@ const Expense = () => {
           onPress={handleOpenBottomSheet}
           name="pluscircle"
           size={50}
-          color="#233337"
+          color="#2c2c2c"
           className="absolute rounded-full bottom-5 right-5 z-20"
         />
       )}

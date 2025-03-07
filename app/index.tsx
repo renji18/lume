@@ -55,9 +55,9 @@ const Welcome = () => {
   }, [error])
 
   return (
-    <SafeAreaView className="bg-theme-blue h-screen justify-center items-center gap-20">
+    <SafeAreaView className="bg-blue h-screen justify-center items-center gap-20">
       <Image source={icon} className="w-[80vw] h-[80vw]" />
-      <Text className="text-theme-white text-4xl font-gsbi tracking-wide text-center px-5 leading-relaxed">
+      <Text className="text-soft_white text-4xl font-gsbi tracking-wide text-center px-5 leading-relaxed">
         Your Life, Your Flow, Your Lume.
       </Text>
       <Swipe />

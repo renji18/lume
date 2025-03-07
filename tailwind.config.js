@@ -6,12 +6,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#639091",
-        theme: {
-          blue: "#62b6c5",
-          white: "#f1f1e8",
-          black: "#233337",
-        },
+        beige: "#f5e6ca",
+        blue: "#5a9bd5",
+        profit: "#1FAA59",
+        loss: "#D72638",
+        dark_slate: "#2c2c2c",
+        soft_white: "#fafaf8",
       },
       fontFamily: {
         gb: ["gb", "sans-serif"],

@@ -26,15 +26,13 @@ const ExpenseList = ({
     <View className={`h-full w-screen items-center`}>
       <TouchableOpacity
         onPress={() => setShowCalendar(true)}
-        className="border-2 rounded-full my-8 px-4 py-2 border-theme-blue"
+        className="border-2 rounded-full my-8 px-4 py-2 border-blue"
       >
-        <Text className="font-gb text-theme-black text-4xl">{currentDate}</Text>
+        <Text className="font-gb text-dark_slate text-4xl">{currentDate}</Text>
       </TouchableOpacity>
       <Text
         className={`font-gsb tracking-wide text-4xl ${
-          totalExpense?.toString().startsWith("-")
-            ? "text-rose-500"
-            : "text-emerald-500"
+          totalExpense?.toString().startsWith("-") ? "text-loss" : "text-profit"
         }`}
       >
         ₹{totalExpense}
@@ -46,7 +44,7 @@ const ExpenseList = ({
           keyExtractor={(_, index) => index.toString()}
           contentContainerStyle={{ paddingBottom: 50 }}
           ListEmptyComponent={
-            <Text className="text-center text-theme-black font-gbi text-2xl">
+            <Text className="text-center text-dark_slate font-gbi text-2xl">
               No Expenses Today
             </Text>
           }
@@ -63,14 +61,14 @@ const ExpenseList = ({
                     : "cash-minus"
                 }
                 size={40}
-                color={item.type === "+" ? "#10b981" : "#f43f5e"}
+                color={item.type === "+" ? "#1FAA59" : "#D72638"}
               />
-              <Text className="capitalize text-theme-black font-gi text-xl flex-1 text-center">
+              <Text className="capitalize text-dark_slate font-gi text-xl flex-1 text-center">
                 {item.reason}
               </Text>
               <Text
                 className={`font-gsb text-2xl ${
-                  item.type === "+" ? "text-emerald-500" : "text-rose-500"
+                  item.type === "+" ? "text-profit" : "text-loss"
                 }`}
               >
                 ₹{item.amount}

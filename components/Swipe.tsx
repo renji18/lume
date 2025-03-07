@@ -63,7 +63,7 @@ const Swipe = () => {
         backgroundColor: interpolateColor(
           X.value,
           [0, BUTTON_WIDTH - SWIPEABLE_DIMENSIONS - BUTTON_PADDING],
-          ["#62b6c5", "#f1f1e8"]
+          ["#5a9bd5", "#2c2c2c"]
         ),
       }
     }),
@@ -97,7 +97,7 @@ const Swipe = () => {
 
   return (
     <View
-      className="bg-theme-white items-center justify-center"
+      className="bg-soft_white items-center justify-center"
       style={{
         height: BUTTON_HEIGHT,
         width: BUTTON_WIDTH,
@@ -106,7 +106,7 @@ const Swipe = () => {
       }}
     >
       <Animated.View
-        className="absolute left-0 bg-theme-black"
+        className="absolute left-0 bg-dark_slate"
         style={[
           {
             height: BUTTON_HEIGHT,
@@ -130,7 +130,7 @@ const Swipe = () => {
         />
       </PanGestureHandler>
       <Animated.Text
-        className="self-center text-xl text-theme-black font-gb tracking-wider z-0"
+        className="self-center text-xl text-dark_slate font-gb tracking-wider z-0"
         style={[AnimatedStyles.text]}
       >
         Let's get started

@@ -64,7 +64,7 @@ const Analyze = () => {
   )
 
   return (
-    <SafeAreaView className="bg-theme-white flex-1 w-full items-center">
+    <SafeAreaView className="bg-beige flex-1 w-full items-center">
       {selectedYear ? (
         <MonthlyAnalysis
           selectedYear={selectedYear}

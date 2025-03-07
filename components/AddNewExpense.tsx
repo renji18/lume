@@ -63,13 +63,13 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
         id: "online",
         label: "Online",
         value: "online",
-        color: "#233337",
+        color: "#2c2c2c",
       },
       {
         id: "cash",
         label: "Cash",
         value: "cash",
-        color: "#233337",
+        color: "#2c2c2c",
       },
     ],
     []
@@ -81,13 +81,13 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
         id: "+",
         label: "Income",
         value: "+",
-        color: "#233337",
+        color: "#2c2c2c",
       },
       {
         id: "-",
         label: "Expense",
         value: "-",
-        color: "#233337",
+        color: "#2c2c2c",
       },
     ],
     []
@@ -169,17 +169,17 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
       snapPoints={snapPoints}
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#233337", marginTop: 10 }}
-      backgroundStyle={{ backgroundColor: "#f1f1e8" }}
+      handleIndicatorStyle={{ backgroundColor: "#5a9bd5", marginTop: 10 }}
+      backgroundStyle={{ backgroundColor: "#fafaf8" }}
     >
-      <BottomSheetView className="pt-8 bg-theme-white pb-60 flex-1 items-center gap-5">
-        <Text className="font-gb text-4xl">Add New Expense</Text>
+      <BottomSheetView className="pt-8 pb-60 flex-1 items-center gap-5">
+        <Text className="font-gb text-4xl text-dark_slate">Add New Expense</Text>
         <BottomSheetTextInput
           placeholder="Enter Amount"
           keyboardType="number-pad"
           defaultValue={String(newEntry?.amount || "")}
           onChangeText={(val) => (amountRef.current = Number(val))}
-          className="border border-theme-black focus:border-theme-blue text-theme-black font-gl text-2xl px-5 py-2 rounded-full tracking-wide w-1/2 text-center"
+          className="border border-dark_slate focus:border-blue text-dark_slate font-gl text-2xl px-5 py-2 rounded-full tracking-wide w-1/2 text-center placeholder:text-dark_slate/60"
         />
         <RadioGroup
           radioButtons={modeButtons}
@@ -188,7 +188,7 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
           layout="row"
           labelStyle={{
             fontSize: 16,
-            color: "#233337",
+            color: "#2c2c2c",
           }}
         />
         <RadioGroup
@@ -198,7 +198,7 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
           layout="row"
           labelStyle={{
             fontSize: 16,
-            color: "#233337",
+            color: "#2c2c2c",
           }}
         />
         <BottomSheetTextInput
@@ -206,17 +206,17 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
           keyboardType="default"
           defaultValue={newEntry.reason}
           onChangeText={(val) => (reasonRef.current = val)}
-          className="border border-theme-black focus:border-theme-blue text-theme-black font-gl text-2xl px-5 py-2 rounded-full tracking-wide w-2/3 text-center"
+          className="border border-dark_slate focus:border-blue text-dark_slate font-gl text-2xl px-5 py-2 rounded-full tracking-wide w-2/3 text-center placeholder:text-dark_slate/60"
         />
 
         <TouchableOpacity
           onPress={handleAdd}
-          className="bg-theme-blue w-1/2 px-5 py-2 rounded-full items-center"
+          className="bg-blue w-1/2 px-5 py-2 rounded-full items-center"
         >
           {loading ? (
-            <ActivityIndicator color="#0000ff" className="py-0.5" />
+            <ActivityIndicator color="#fafaf8" className="py-0.5" />
           ) : (
-            <Text className="font-gsb text-xl tracking-wide">Add Data</Text>
+            <Text className="font-gsb text-xl text-soft_white tracking-wide">Add Data</Text>
           )}
         </TouchableOpacity>
       </BottomSheetView>
