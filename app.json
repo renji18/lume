@@ -18,7 +18,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
-        "backgroundColor": "#494b4d"
+        "backgroundColor": "#5a9bd5"
       },
       "package": "com.renji18.lume"
     },
@@ -35,7 +35,7 @@
           "image": "./assets/images/icon1.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#62b6c5"
+          "backgroundColor": "#5a9bd5"
         }
       ]
     ],
