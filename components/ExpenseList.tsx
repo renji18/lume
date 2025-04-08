@@ -2,6 +2,7 @@ import { View, Text, FlatList, TouchableOpacity } from "react-native"
 import React, { useEffect, useState } from "react"
 import { ExpenseData } from "@/utils/interface"
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
+import formattedExpense from "@/utils/parseFloat"
 
 const ExpenseList = ({
   currentDate,
@@ -35,7 +36,7 @@ const ExpenseList = ({
           totalExpense?.toString().startsWith("-") ? "text-loss" : "text-profit"
         }`}
       >
-        ₹{totalExpense}
+        ₹{formattedExpense(totalExpense)}
       </Text>
 
       <View className="flex-1 w-full mt-10">
@@ -71,7 +72,7 @@ const ExpenseList = ({
                   item.type === "+" ? "text-profit" : "text-loss"
                 }`}
               >
-                ₹{item.amount}
+                ₹{formattedExpense(item.amount)}
               </Text>
             </View>
           )}

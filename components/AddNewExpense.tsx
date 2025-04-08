@@ -176,7 +176,7 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
         <Text className="font-gb text-4xl text-dark_slate">Add New Expense</Text>
         <BottomSheetTextInput
           placeholder="Enter Amount"
-          keyboardType="number-pad"
+          keyboardType="decimal-pad"
           defaultValue={String(newEntry?.amount || "")}
           onChangeText={(val) => (amountRef.current = Number(val))}
           className="border border-dark_slate focus:border-blue text-dark_slate font-gl text-2xl px-5 py-2 rounded-full tracking-wide w-1/2 text-center placeholder:text-dark_slate/60"

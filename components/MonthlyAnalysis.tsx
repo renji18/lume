@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, FlatList } from "react-native"
 import AntDesign from "@expo/vector-icons/AntDesign"
 import { getMonthShortName } from "@/utils/getMonthName"
+import formattedExpense from "@/utils/parseFloat"
 
 const MonthlyAnalysis = ({
   selectedYear,
@@ -56,7 +57,7 @@ const MonthlyAnalysis = ({
                 Total Expense
               </Text>
               <Text className="font-gb text-2xl text-soft_white">
-                ₹{item.totalExpense}
+                ₹{formattedExpense(item.totalExpense)}
               </Text>
             </View>
           </View>

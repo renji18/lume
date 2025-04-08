@@ -1,3 +1,4 @@
+import formattedExpense from "@/utils/parseFloat"
 import { View, Text, FlatList, TouchableOpacity } from "react-native"
 
 const YearlyAnalysis = ({
@@ -42,7 +43,7 @@ const YearlyAnalysis = ({
                 Total Expense
               </Text>
               <Text className="font-gb text-2xl text-soft_white">
-                ₹{item.totalExpense}
+                ₹{formattedExpense(item.totalExpense)}
               </Text>
             </View>
           </TouchableOpacity>
