@@ -1,17 +1,17 @@
-export function getMonthShortName(month: string): string {
+export function getMonthName(month: string): string {
   const months: string[] = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
+    "January",
+    "February",
+    "March",
+    "April",
     "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ]
   const index = parseInt(month, 10) - 1
 

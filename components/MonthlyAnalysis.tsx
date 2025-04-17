@@ -1,7 +1,8 @@
 import { View, Text, TouchableOpacity, FlatList } from "react-native"
 import AntDesign from "@expo/vector-icons/AntDesign"
-import { getMonthShortName } from "@/utils/getMonthName"
+import { getMonthName } from "@/utils/getMonthName"
 import formattedExpense from "@/utils/parseFloat"
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 
 const MonthlyAnalysis = ({
   selectedYear,
@@ -12,6 +13,8 @@ const MonthlyAnalysis = ({
   setSelectedYear: (arg: string | null) => void
   monthlyData: Array<{
     month: string
+    aggregate: number
+    totalIncome: number
     totalExpense: number
   }> | null
 }) => {
@@ -28,7 +31,7 @@ const MonthlyAnalysis = ({
           Year {selectedYear}
         </Text>
       </View>
-      <Text className="text-center text-dark_slate text-3xl font-gm mt-5">
+      <Text className="text-center text-dark_slate text-3xl font-gm my-5">
         Monthly Analysis
       </Text>
       <FlatList
@@ -43,22 +46,38 @@ const MonthlyAnalysis = ({
         renderItem={({ item }) => (
           <View
             className={`${
-              item.totalExpense < 0 ? "bg-loss" : "bg-profit"
-            } px-6 py-10 rounded-lg flex-row items-center justify-between my-5`}
+              item.aggregate < 0 ? "bg-loss" : "bg-profit"
+            } rounded-lg mb-10 last:mb-5`}
           >
-            <View>
-              <Text className="font-gi text-lg text-soft_white">Month</Text>
+            <View className="flex-row items-center justify-between px-6 py-4">
+              <Text className="font-gb text-2xl text-beige">
+                {getMonthName(item.month)}
+              </Text>
               <Text className="font-gb text-2xl text-soft_white">
-                {getMonthShortName(item.month)}
+                ₹{formattedExpense(item.aggregate)}
               </Text>
             </View>
-            <View>
-              <Text className="font-gi text-lg text-soft_white">
-                Total Expense
-              </Text>
-              <Text className="font-gb text-2xl text-soft_white">
-                ₹{formattedExpense(item.totalExpense)}
-              </Text>
+            <View className="border-t border-t-beige px-4 py-3 flex-row items-center justify-between">
+              <View className="flex-row items-center gap-2">
+                <MaterialCommunityIcons
+                  name="bank-plus"
+                  size={24}
+                  color="#f5e6ca"
+                />
+                <Text className="text-soft_white font-gsb text-2xl">
+                  ₹{formattedExpense(item.totalIncome)}
+                </Text>
+              </View>
+              <View className="flex-row items-center gap-2">
+                <MaterialCommunityIcons
+                  name="bank-minus"
+                  size={24}
+                  color="#f5e6ca"
+                />
+                <Text className="text-soft_white font-gsb text-2xl">
+                  ₹{formattedExpense(item.totalExpense)}
+                </Text>
+              </View>
             </View>
           </View>
         )}

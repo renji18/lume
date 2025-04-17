@@ -26,6 +26,8 @@ const Analyze = () => {
   const [selectedYear, setSelectedYear] = useState<string | null>(null)
   const [monthlyData, setMonthlyData] = useState<Array<{
     month: string
+    aggregate: number
+    totalIncome: number
     totalExpense: number
   }> | null>(null)
 
@@ -43,14 +45,17 @@ const Analyze = () => {
     const months = Object.values(
       allMonthsData.reduce((acc, item) => {
         const [_, month, __] = item.date.split("/")
-        const amount = Number(item.amount) * (item.type === "+" ? 1 : -1)
+        const amount = Number(item.amount)
+        const isIncome = item.type === "+"
 
         if (!acc[month]) {
-          acc[month] = { month, totalExpense: 0 }
+          acc[month] = { month, aggregate: 0, totalExpense: 0, totalIncome: 0 }
         }
-        acc[month].totalExpense += amount
+        acc[month].aggregate += isIncome ? amount : -amount
+        acc[month].totalIncome += isIncome ? amount : 0
+        acc[month].totalExpense += isIncome ? 0 : amount
         return acc
-      }, {} as Record<string, { month: string; totalExpense: number }>)
+      }, {} as Record<string, { month: string; aggregate: number; totalExpense: number; totalIncome: number }>)
     )
 
     setMonthlyData(months)
