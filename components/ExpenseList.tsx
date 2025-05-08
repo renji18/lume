@@ -1,14 +1,14 @@
+
 import { View, Text, FlatList, TouchableOpacity } from "react-native"
 import React, { useEffect, useState } from "react"
 import { ExpenseData } from "@/utils/interface"
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
-import formattedExpense from "@/utils/parseFloat"
 
 const ExpenseList = ({
-  currentDate,
-  currentData,
-  setShowCalendar,
-}: {
+                       currentDate,
+                       currentData,
+                       setShowCalendar,
+                     }: {
   currentDate: string
   currentData?: Array<ExpenseData>
   setShowCalendar: (arg: boolean) => void
@@ -36,7 +36,7 @@ const ExpenseList = ({
           totalExpense?.toString().startsWith("-") ? "text-loss" : "text-profit"
         }`}
       >
-        ₹{formattedExpense(totalExpense)}
+        ₹{totalExpense}
       </Text>
 
       <View className="flex-1 w-full mt-10">
@@ -56,10 +56,10 @@ const ExpenseList = ({
                   item.type === "+" && item.mode === "online"
                     ? "credit-card-plus-outline"
                     : item.type === "-" && item.mode === "online"
-                    ? "credit-card-minus-outline"
-                    : item.type === "+" && item.mode === "cash"
-                    ? "cash-plus"
-                    : "cash-minus"
+                      ? "credit-card-minus-outline"
+                      : item.type === "+" && item.mode === "cash"
+                        ? "cash-plus"
+                        : "cash-minus"
                 }
                 size={40}
                 color={item.type === "+" ? "#1FAA59" : "#D72638"}
@@ -72,7 +72,7 @@ const ExpenseList = ({
                   item.type === "+" ? "text-profit" : "text-loss"
                 }`}
               >
-                ₹{formattedExpense(item.amount)}
+                ₹{item.amount}
               </Text>
             </View>
           )}

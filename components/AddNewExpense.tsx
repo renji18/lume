@@ -1,3 +1,4 @@
+
 import { ActivityIndicator, Text, TouchableOpacity } from "react-native"
 import React, {
   forwardRef,
@@ -15,14 +16,6 @@ import {
   useBottomSheetModal,
 } from "@gorhom/bottom-sheet"
 import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group"
-import { MyDispatch, MySelector } from "@/redux/store"
-import { handleUpdateExpenseData } from "@/firebase"
-import {
-  setError,
-  setLoading,
-  updateExpenseData,
-} from "@/redux/slices/expenseTrackerSlice"
-import { useDispatch } from "react-redux"
 import MyToast from "@/utils/MyToast"
 
 interface Props {
@@ -35,12 +28,7 @@ const snapPoints = ["50%", "75%"]
 const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
   const { dismiss } = useBottomSheetModal()
 
-  const dispatch = useDispatch<MyDispatch>()
-  const {
-    data: { expenses },
-    error,
-    loading,
-  } = MySelector((state) => state.expense)
+  const loading = false
 
   const reasonRef = useRef<string>("")
   const amountRef = useRef<number>(0)
@@ -133,33 +121,19 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
       return
     }
 
-    dispatch(setLoading(true))
     const newData = {
       ...newEntry,
       date: currentDate,
       reason: reasonRef.current,
       amount: amountRef.current,
     }
-    const res = await handleUpdateExpenseData(expenses, newData)
-    if (typeof res !== "string" && res?.error) {
-      dispatch(setError(res?.msg))
-    } else {
-      typeof res === "string" && MyToast("success", res)
-      dispatch(updateExpenseData(newData))
-    }
-    dispatch(setLoading(false))
+
     resetData()
     reasonRef.current = ""
     amountRef.current = 0
     dismiss()
   }
 
-  // effect to show toast in case of error
-  useEffect(() => {
-    if (!error) return
-    MyToast("error", error)
-    dispatch(setError(null))
-  }, [error])
 
   return (
     <BottomSheetModal

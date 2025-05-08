@@ -1,14 +1,14 @@
+
 import { View, Text, TouchableOpacity, FlatList } from "react-native"
 import AntDesign from "@expo/vector-icons/AntDesign"
 import { getMonthName } from "@/utils/getMonthName"
-import formattedExpense from "@/utils/parseFloat"
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons"
 
 const MonthlyAnalysis = ({
-  selectedYear,
-  setSelectedYear,
-  monthlyData,
-}: {
+                           selectedYear,
+                           setSelectedYear,
+                           monthlyData,
+                         }: {
   selectedYear: string
   setSelectedYear: (arg: string | null) => void
   monthlyData: Array<{
@@ -54,7 +54,7 @@ const MonthlyAnalysis = ({
                 {getMonthName(item.month)}
               </Text>
               <Text className="font-gb text-2xl text-soft_white">
-                ₹{formattedExpense(item.aggregate)}
+                ₹{item.aggregate}
               </Text>
             </View>
             <View className="border-t border-t-beige px-4 py-3 flex-row items-center justify-between">
@@ -65,7 +65,7 @@ const MonthlyAnalysis = ({
                   color="#f5e6ca"
                 />
                 <Text className="text-soft_white font-gsb text-2xl">
-                  ₹{formattedExpense(item.totalIncome)}
+                  ₹{item.totalIncome}
                 </Text>
               </View>
               <View className="flex-row items-center gap-2">
@@ -75,7 +75,7 @@ const MonthlyAnalysis = ({
                   color="#f5e6ca"
                 />
                 <Text className="text-soft_white font-gsb text-2xl">
-                  ₹{formattedExpense(item.totalExpense)}
+                  ₹{item.totalExpense}
                 </Text>
               </View>
             </View>

@@ -1,13 +1,12 @@
-import { View, Text, FlatList } from "react-native"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { MySelector } from "@/redux/store"
-import { getDateJs, uiDateFormatter } from "@/utils/dateFormatter"
-import { monthsSince } from "@/utils/montsPassed"
+
+import {FlatList, Text, View} from "react-native"
+import {SafeAreaView} from "react-native-safe-area-context"
+import {getDateJs, uiDateFormatter} from "@/utils/dateFormatter"
+import {monthsSince} from "@/utils/montsPassed"
 
 const Subscriptions = () => {
-  const {
-    data: { subscription },
-  } = MySelector((state) => state.expense)
+
+  const subscription: ArrayLike<any> | null | undefined = []
 
   return (
     <SafeAreaView className="bg-beige flex-1 items-center w-full">
@@ -18,13 +17,13 @@ const Subscriptions = () => {
         <FlatList
           data={subscription}
           keyExtractor={(_, index) => index.toString()}
-          contentContainerStyle={{ paddingBottom: 50 }}
+          contentContainerStyle={{paddingBottom: 50}}
           ListEmptyComponent={
             <Text className="font-gsb text-dark_slate text-3xl my-10 text-center">
               You don't have any active Subscriptions
             </Text>
           }
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <View className="my-10 px-6 py-8 rounded-lg bg-blue">
               <View className="flex-row justify-between items-center">
                 <View>

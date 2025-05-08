@@ -1,10 +1,9 @@
-import formattedExpense from "@/utils/parseFloat"
-import { View, Text, FlatList, TouchableOpacity } from "react-native"
+import {FlatList, Text, TouchableOpacity, View} from "react-native"
 
 const YearlyAnalysis = ({
-  years,
-  setSelectedYear,
-}: {
+                          years,
+                          setSelectedYear,
+                        }: {
   years: {
     year: string
     totalExpense: number
@@ -19,13 +18,13 @@ const YearlyAnalysis = ({
       <FlatList
         data={years}
         keyExtractor={(_, index) => index.toString()}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{paddingBottom: 20}}
         ListEmptyComponent={
           <Text className="text-center text-dark_slate font-gbi text-2xl">
             No Expenses Found
           </Text>
         }
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => setSelectedYear(item.year)}
             className={`${
@@ -37,7 +36,7 @@ const YearlyAnalysis = ({
             </Text>
 
             <Text className="font-gb text-2xl text-soft_white">
-              ₹{formattedExpense(item.totalExpense)}
+              ₹{item.totalExpense}
             </Text>
           </TouchableOpacity>
         )}

@@ -1,10 +1,8 @@
-import { router } from "expo-router"
-import React, { useState } from "react"
-import { View } from "react-native"
-import {
-  GestureHandlerRootView,
-  PanGestureHandler,
-} from "react-native-gesture-handler"
+
+import {router} from "expo-router"
+import React, {useState} from "react"
+import {View} from "react-native"
+import {PanGestureHandler,} from "react-native-gesture-handler"
 import Animated, {
   Extrapolate,
   interpolate,
@@ -15,6 +13,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
+// import {useAuthStore} from "@/zustand/auth-store";
 
 const BUTTON_WIDTH = 350
 const BUTTON_HEIGHT = 100
@@ -25,6 +24,7 @@ const H_WAVE_RANGE = SWIPEABLE_DIMENSIONS + 2 * BUTTON_PADDING
 const H_SWIPE_RANGE = BUTTON_WIDTH - 2 * BUTTON_PADDING - SWIPEABLE_DIMENSIONS
 
 const Swipe = () => {
+  // const {user} = useAuthStore()
   const [toggled, setToggled] = useState<boolean>(false)
 
   const X = useSharedValue(0)
@@ -50,7 +50,11 @@ const Swipe = () => {
         runOnJS(setToggled)(false)
       } else {
         X.value = withSpring(H_SWIPE_RANGE)
-        runOnJS(router.push)("/(tabs)/expense")
+        if (false) {
+          runOnJS(router.push)("/(tabs)/expense")
+        } else {
+          runOnJS(router.push)("/(auth)/sign-in")
+        }
         runOnJS(setToggled)(true)
       }
     },
@@ -59,7 +63,7 @@ const Swipe = () => {
   const AnimatedStyles = {
     swipeable: useAnimatedStyle(() => {
       return {
-        transform: [{ translateX: X.value }],
+        transform: [{translateX: X.value}],
         backgroundColor: interpolateColor(
           X.value,
           [0, BUTTON_WIDTH - SWIPEABLE_DIMENSIONS - BUTTON_PADDING],

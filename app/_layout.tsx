@@ -1,14 +1,14 @@
-import { ReduxProvider } from "@/redux/provider"
-import { useFonts } from "expo-font"
-import { Stack } from "expo-router"
+import {useFonts} from "expo-font"
+import {Stack} from "expo-router"
 import * as SplashScreen from "expo-splash-screen"
-import { StatusBar } from "expo-status-bar"
-import { useEffect } from "react"
+import {StatusBar} from "expo-status-bar"
+import {useEffect} from "react"
 import Toast from "react-native-toast-message"
 import "react-native-reanimated"
-import { GestureHandlerRootView } from "react-native-gesture-handler"
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
+import {GestureHandlerRootView} from "react-native-gesture-handler"
+import {BottomSheetModalProvider} from "@gorhom/bottom-sheet"
 import "../global.css"
+// import {useAuthStore} from "@/zustand/auth-store";
 
 SplashScreen.preventAutoHideAsync()
 
@@ -32,29 +32,34 @@ export default function RootLayout() {
     g: require("../assets/fonts/SourGummy-Regular.ttf"),
   })
 
+  // const {init} = useAuthStore()
+
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync()
     }
   }, [loaded])
 
+  // useEffect(() => {
+  //   init()
+  // }, []);
+
   if (!loaded) {
     return null
   }
 
   return (
-    <ReduxProvider>
-      <GestureHandlerRootView>
-        <BottomSheetModalProvider>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="+not-found" />
-          </Stack>
-          <StatusBar style="dark" />
-          <Toast />
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </ReduxProvider>
+    <GestureHandlerRootView>
+      <BottomSheetModalProvider>
+        <Stack>
+          <Stack.Screen name="index" options={{headerShown: false}}/>
+          <Stack.Screen name="(auth)" options={{headerShown: false}}/>
+          <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
+          <Stack.Screen name="+not-found"/>
+        </Stack>
+        <StatusBar style="dark"/>
+        <Toast/>
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   )
 }

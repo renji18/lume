@@ -1,28 +1,22 @@
-import { View, Text, TouchableOpacity } from "react-native"
-import React, { useCallback, useEffect, useRef, useState } from "react"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { MySelector } from "@/redux/store"
-import { ExpenseData } from "@/utils/interface"
-import {
-  getDateJs,
-  uiDateFormatter,
-  useDateFormatter,
-} from "@/utils/dateFormatter"
+
+import {Text, TouchableOpacity, View} from "react-native"
+import React, {useCallback, useEffect, useRef, useState} from "react"
+import {SafeAreaView} from "react-native-safe-area-context"
+import {ExpenseData} from "@/utils/interface"
+import {getDateJs, uiDateFormatter, useDateFormatter,} from "@/utils/dateFormatter"
 import AddNewExpense from "@/components/AddNewExpense"
-import { BottomSheetModal } from "@gorhom/bottom-sheet"
+import {BottomSheetModal} from "@gorhom/bottom-sheet"
 import AntDesign from "@expo/vector-icons/AntDesign"
 import ExpenseList from "@/components/ExpenseList"
-import { MyCalendar } from "@/components/Calendar"
-import { useFocusEffect } from "@react-navigation/native"
+import {MyCalendar} from "@/components/Calendar"
+import {useFocusEffect} from "@react-navigation/native"
 
 const Expense = () => {
   const bottomSheetRef = useRef<BottomSheetModal>(null)
 
   const dateToday = new Date(Date.now())
 
-  const {
-    data: { expenses },
-  } = MySelector((state) => state.expense)
+  const expenses: unknown[] = []
 
   const [currentDate, setCurrentDate] = useState<{ ui: string; use: string }>({
     ui: uiDateFormatter(dateToday),
@@ -48,10 +42,7 @@ const Expense = () => {
 
   // to filter and set current date data
   useEffect(() => {
-    if (!expenses) return
-    if (!currentDate) return
-    const filterCurrentData = expenses.filter((d) => d.date === currentDate.use)
-    setCurrentData(filterCurrentData)
+
   }, [currentDate, expenses])
 
   // to hide the bars
@@ -120,7 +111,7 @@ const Expense = () => {
         />
       )}
 
-      <AddNewExpense ref={bottomSheetRef} currentDate={currentDate.use} />
+      <AddNewExpense ref={bottomSheetRef} currentDate={currentDate.use}/>
       {!showCalendar && (
         <AntDesign
           onPress={handleOpenBottomSheet}

@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useState } from "react"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { MySelector } from "@/redux/store"
-import { useFocusEffect } from "@react-navigation/native"
+
+import React, {useCallback, useEffect, useState} from "react"
+import {SafeAreaView} from "react-native-safe-area-context"
+import {useFocusEffect} from "@react-navigation/native"
 import MonthlyAnalysis from "@/components/MonthlyAnalysis"
 import YearlyAnalysis from "@/components/YearlyAnalysis"
 
 const Analyze = () => {
-  const {
-    data: { expenses },
-  } = MySelector((state) => state.expense)
+
+  const expenses: any[] = []
 
   const years = Object.values(
     expenses.reduce((acc, item) => {
@@ -16,7 +15,7 @@ const Analyze = () => {
       const amount = Number(item.amount) * (item.type === "+" ? 1 : -1)
 
       if (!acc[year]) {
-        acc[year] = { year, totalExpense: 0 }
+        acc[year] = {year, totalExpense: 0}
       }
       acc[year].totalExpense += amount
       return acc
@@ -49,7 +48,7 @@ const Analyze = () => {
         const isIncome = item.type === "+"
 
         if (!acc[month]) {
-          acc[month] = { month, aggregate: 0, totalExpense: 0, totalIncome: 0 }
+          acc[month] = {month, aggregate: 0, totalExpense: 0, totalIncome: 0}
         }
         acc[month].aggregate += isIncome ? amount : -amount
         acc[month].totalIncome += isIncome ? amount : 0
@@ -58,7 +57,7 @@ const Analyze = () => {
       }, {} as Record<string, { month: string; aggregate: number; totalExpense: number; totalIncome: number }>)
     )
 
-    setMonthlyData(months)
+    // setMonthlyData(months)
   }, [selectedYear])
 
   // to reset selected year
@@ -70,15 +69,15 @@ const Analyze = () => {
 
   return (
     <SafeAreaView className="bg-beige flex-1 w-full items-center">
-      {selectedYear ? (
-        <MonthlyAnalysis
-          selectedYear={selectedYear}
-          setSelectedYear={setSelectedYear}
-          monthlyData={monthlyData}
-        />
-      ) : (
-        <YearlyAnalysis years={years} setSelectedYear={setSelectedYear} />
-      )}
+      {/*{selectedYear ? (*/}
+      {/*  <MonthlyAnalysis*/}
+      {/*    selectedYear={selectedYear}*/}
+      {/*    setSelectedYear={setSelectedYear}*/}
+      {/*    monthlyData={monthlyData}*/}
+      {/*  />*/}
+      {/*) : (*/}
+      {/*  <YearlyAnalysis years={years} setSelectedYear={setSelectedYear}/>*/}
+      {/*)}*/}
     </SafeAreaView>
   )
 }
