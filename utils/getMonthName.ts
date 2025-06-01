@@ -1,4 +1,4 @@
-export function getMonthName(month: string): string {
+export function getMonthName(month: number): string {
   const months: string[] = [
     "January",
     "February",
@@ -13,7 +13,7 @@ export function getMonthName(month: string): string {
     "November",
     "December",
   ]
-  const index = parseInt(month, 10) - 1
+  const index = month - 1
 
   return months[index] || "Invalid Month"
 }

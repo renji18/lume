@@ -11,6 +11,7 @@ import RadioGroup, {RadioButtonProps} from "react-native-radio-buttons-group"
 import MyToast from "@/utils/MyToast"
 import {useTransactionStore} from "@/zustand/transaction-store";
 import {useAuthStore} from "@/zustand/auth-store";
+import {useAnalyticsStore} from "@/zustand/analytics-store";
 
 interface Props {
   currentDate: Date
@@ -23,6 +24,7 @@ const AddNewExpense = forwardRef<Ref, Props>(({currentDate}, ref) => {
   const {dismiss} = useBottomSheetModal()
   const {user} = useAuthStore()
   const {createTransaction} = useTransactionStore()
+  const {getYearlyOverview, getMonthlyOverview} = useAnalyticsStore()
 
   const loading = false
 
@@ -131,6 +133,9 @@ const AddNewExpense = forwardRef<Ref, Props>(({currentDate}, ref) => {
       resetData()
       reasonRef.current = ""
       amountRef.current = 0
+
+      getYearlyOverview(user.id)
+      getMonthlyOverview(user.id)
     } else {
       MyToast("error", "Error creating transaction")
     }

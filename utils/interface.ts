@@ -18,10 +18,28 @@ export type Transaction = {
 }
 
 export interface SubscriptionData {
+  id: string;
+  user_id: string;
   type: "monthly" | "yearly"
-  from: string
-  to?: string
+  from_date: string
+  to_date?: string
   name: string
   amount: number
-  subscription: 'trial' | 'paid'
+  status: 'trial' | 'paid'
+  created_at: string;
+}
+
+export interface YearlyOverview {
+  net_balance: number;
+  total_expense: number;
+  total_income: number;
+  year: number;
+}
+
+export interface MonthlyOverview {
+  month: number;
+  net_balance: number;
+  total_expense: number;
+  total_income: number;
+  year: number;
 }

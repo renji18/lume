@@ -10,6 +10,8 @@ import {BottomSheetModalProvider} from "@gorhom/bottom-sheet"
 import "../global.css"
 import {useAuthStore} from "@/zustand/auth-store";
 import {useTransactionStore} from "@/zustand/transaction-store";
+import {useSubscriptionStore} from "@/zustand/subscription-store";
+import {useAnalyticsStore} from "@/zustand/analytics-store";
 
 SplashScreen.preventAutoHideAsync()
 
@@ -35,6 +37,8 @@ export default function RootLayout() {
 
   const {init, user} = useAuthStore()
   const {getTransactionsForDate} = useTransactionStore()
+  const {getSubscriptions} = useSubscriptionStore()
+  const {getYearlyOverview, getMonthlyOverview} = useAnalyticsStore()
 
   useEffect(() => {
     if (loaded) {
@@ -50,6 +54,9 @@ export default function RootLayout() {
     if (user) {
       const today = new Date(Date.now());
       getTransactionsForDate(today.toISOString().split('T')[0], user.id)
+      getSubscriptions(user.id)
+      getYearlyOverview(user.id)
+      getMonthlyOverview(user.id)
     }
   }, [user]);
 
