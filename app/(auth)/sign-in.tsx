@@ -1,7 +1,7 @@
 
 import {ActivityIndicator, Text, TextInput, TouchableOpacity} from "react-native";
 import {useState} from "react";
-// import {useAuthStore} from "@/zustand/auth-store";
+import {useAuthStore} from "@/zustand/auth-store";
 import {router} from "expo-router";
 import MyToast from "@/utils/MyToast";
 import {SafeAreaView} from "react-native-safe-area-context";
@@ -10,14 +10,14 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const {signIn, loading: submitting} = useAuthStore();
+  const {signIn, loading: submitting} = useAuthStore();
 
   const handleSignIn = async () => {
     if (!email || !password) return MyToast("info", "Please enter all the fields");
-    // const res = await signIn(email, password);
-    // if (res) {
-    //   router.replace("/(tabs)/expense");
-    // }
+    const res = await signIn(email, password);
+    if (res) {
+      router.replace("/(tabs)/expense");
+    }
   };
 
   return (
@@ -43,15 +43,15 @@ export default function SignIn() {
         className="w-full bg-soft_white p-4 rounded-[10px] my-4 text-dark_slate"
       />
 
-      {/*<TouchableOpacity*/}
-      {/*  className="bg-blue w-full py-4 rounded-[10px] items-center mb-5" onPress={handleSignIn}*/}
-      {/*  disabled={submitting}>*/}
-      {/*  {submitting ? (*/}
-      {/*    <ActivityIndicator color="#fff"/>*/}
-      {/*  ) : (*/}
-      {/*    <Text className="text-white font-bold">Sign In</Text>*/}
-      {/*  )}*/}
-      {/*</TouchableOpacity>*/}
+      <TouchableOpacity
+        className="bg-blue w-full py-4 rounded-[10px] items-center mb-5" onPress={handleSignIn}
+        disabled={submitting}>
+        {submitting ? (
+          <ActivityIndicator color="#fff"/>
+        ) : (
+          <Text className="text-white font-bold">Sign In</Text>
+        )}
+      </TouchableOpacity>
 
       <TouchableOpacity onPress={() => router.push("/(auth)/sign-up")}>
         <Text className="text-sm mt-2.5 text-blue">Don't have an account? Sign Up</Text>

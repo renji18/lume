@@ -3,7 +3,7 @@ import {ActivityIndicator, Text, TextInput, TouchableOpacity} from "react-native
 import {useState} from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {router} from "expo-router";
-// import {useAuthStore} from "@/zustand/auth-store";
+import {useAuthStore} from "@/zustand/auth-store";
 import MyToast from "@/utils/MyToast";
 
 export default function SignUp() {
@@ -12,14 +12,14 @@ export default function SignUp() {
   const [adminPassword, setAdminPassword] = useState("");
 
 
-  // const {signUp, loading: submitting} = useAuthStore();
+  const {signUp, loading: submitting} = useAuthStore();
 
   const handleSignUp = async () => {
     if (!email || !password || !adminPassword) return MyToast("info", "Please enter all the fields");
-    // const res = await signUp(email, password, adminPassword);
-    // if (res) {
-    //   router.replace("/(tabs)/expense");
-    // }
+    const res = await signUp(email, password, adminPassword);
+    if (res) {
+      router.replace("/(tabs)/expense");
+    }
   };
 
   return (
@@ -54,15 +54,15 @@ export default function SignUp() {
         placeholderTextColor="#999"
       />
 
-      {/*<TouchableOpacity*/}
-      {/*  className="bg-blue w-full p-4 rounded-[10px] items-center mb-5" onPress={handleSignUp}*/}
-      {/*  disabled={submitting}>*/}
-      {/*  {submitting ? (*/}
-      {/*    <ActivityIndicator color="#fff"/>*/}
-      {/*  ) : (*/}
-      {/*    <Text className="text-white font-bold">Sign Up</Text>*/}
-      {/*  )}*/}
-      {/*</TouchableOpacity>*/}
+      <TouchableOpacity
+        className="bg-blue w-full p-4 rounded-[10px] items-center mb-5" onPress={handleSignUp}
+        disabled={submitting}>
+        {submitting ? (
+          <ActivityIndicator color="#fff"/>
+        ) : (
+          <Text className="text-white font-bold">Sign Up</Text>
+        )}
+      </TouchableOpacity>
 
       <TouchableOpacity onPress={() => router.push("/(auth)/sign-in")}>
         <Text className="text-sm mt-2.5 text-blue">Already have an account? Sign In</Text>

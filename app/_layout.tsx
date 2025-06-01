@@ -8,7 +8,8 @@ import "react-native-reanimated"
 import {GestureHandlerRootView} from "react-native-gesture-handler"
 import {BottomSheetModalProvider} from "@gorhom/bottom-sheet"
 import "../global.css"
-// import {useAuthStore} from "@/zustand/auth-store";
+import {useAuthStore} from "@/zustand/auth-store";
+import {useTransactionStore} from "@/zustand/transaction-store";
 
 SplashScreen.preventAutoHideAsync()
 
@@ -32,17 +33,25 @@ export default function RootLayout() {
     g: require("../assets/fonts/SourGummy-Regular.ttf"),
   })
 
-  // const {init} = useAuthStore()
+  const {init, user} = useAuthStore()
+  const {getTransactionsForDate} = useTransactionStore()
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync()
+      SplashScreen.hideAsync();
     }
   }, [loaded])
 
-  // useEffect(() => {
-  //   init()
-  // }, []);
+  useEffect(() => {
+    init();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      const today = new Date(Date.now());
+      getTransactionsForDate(today.toISOString().split('T')[0], user.id)
+    }
+  }, [user]);
 
   if (!loaded) {
     return null

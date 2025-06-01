@@ -1,8 +1,3 @@
-import {
-  getDateJs,
-  uiDateFormatter,
-  useDateFormatter,
-} from "@/utils/dateFormatter"
 import { Calendar, toDateId } from "@marceloterreiro/flash-calendar"
 import { View } from "react-native"
 
@@ -13,19 +8,14 @@ export function MyCalendar({
   setCurrentDate,
   setShowCalendar,
 }: {
-  currentDate: string
-  setCurrentDate: ({ ui, use }: { ui: string; use: string }) => void
+  currentDate: Date
+  setCurrentDate: (arg: Date) => void
   setShowCalendar: (arg: boolean) => void
 }) {
-  const selectedDate = toDateId(getDateJs(currentDate))
+  const selectedDate = toDateId(currentDate)
 
   const changeDate = (e: any) => {
-    const newDate = new Date(e)
-
-    setCurrentDate({
-      ui: uiDateFormatter(newDate),
-      use: useDateFormatter(newDate),
-    })
+    setCurrentDate(new Date(e))
     setShowCalendar(false)
   }
 
@@ -40,7 +30,7 @@ export function MyCalendar({
             endId: selectedDate,
           },
         ]}
-        calendarMinDateId="2025-01-01"
+        calendarMinDateId="2025-06-01"
         calendarMaxDateId={today}
         calendarInitialMonthId={today}
         onCalendarDayPress={changeDate}

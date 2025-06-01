@@ -1,9 +1,6 @@
-
 import {Text, TouchableOpacity, View} from "react-native"
 import React, {useCallback, useEffect, useRef, useState} from "react"
 import {SafeAreaView} from "react-native-safe-area-context"
-import {ExpenseData} from "@/utils/interface"
-import {getDateJs, uiDateFormatter, useDateFormatter,} from "@/utils/dateFormatter"
 import AddNewExpense from "@/components/AddNewExpense"
 import {BottomSheetModal} from "@gorhom/bottom-sheet"
 import AntDesign from "@expo/vector-icons/AntDesign"
@@ -14,15 +11,9 @@ import {useFocusEffect} from "@react-navigation/native"
 const Expense = () => {
   const bottomSheetRef = useRef<BottomSheetModal>(null)
 
-  const dateToday = new Date(Date.now())
+  // state to store the active date
+  const [currentDate, setCurrentDate] = useState<Date>(new Date(Date.now()))
 
-  const expenses: unknown[] = []
-
-  const [currentDate, setCurrentDate] = useState<{ ui: string; use: string }>({
-    ui: uiDateFormatter(dateToday),
-    use: useDateFormatter(dateToday),
-  })
-  const [currentData, setCurrentData] = useState<Array<ExpenseData>>()
   const [showBars, setShowBars] = useState<boolean>(true)
   const [showCalendar, setShowCalendar] = useState<boolean>(false)
 
@@ -31,19 +22,10 @@ const Expense = () => {
 
   // handle swipe to update data
   const changeDate = (direction: -1 | 1) => {
-    const newDate = getDateJs(currentDate.use)
-    newDate.setDate(newDate.getDate() + direction)
-
-    setCurrentDate({
-      ui: uiDateFormatter(newDate),
-      use: useDateFormatter(newDate),
-    })
+    const newDate = new Date(currentDate);
+    newDate.setUTCDate(newDate.getUTCDate() + direction);
+    setCurrentDate(newDate)
   }
-
-  // to filter and set current date data
-  useEffect(() => {
-
-  }, [currentDate, expenses])
 
   // to hide the bars
   useEffect(() => {
@@ -58,10 +40,7 @@ const Expense = () => {
   useFocusEffect(
     useCallback(() => {
       setShowCalendar(false)
-      setCurrentDate({
-        ui: uiDateFormatter(dateToday),
-        use: useDateFormatter(dateToday),
-      })
+      setCurrentDate(new Date(Date.now()))
     }, [])
   )
 
@@ -82,9 +61,9 @@ const Expense = () => {
             )}
           </TouchableOpacity>
 
+          {/*Main list*/}
           <ExpenseList
-            currentDate={currentDate.ui}
-            currentData={currentData}
+            currentDate={currentDate}
             setShowCalendar={setShowCalendar}
           />
 
@@ -103,15 +82,19 @@ const Expense = () => {
         </View>
       )}
 
+      {/*Calendar UI component*/}
       {showCalendar && (
         <MyCalendar
-          currentDate={currentDate.use}
+          currentDate={currentDate}
           setCurrentDate={setCurrentDate}
           setShowCalendar={setShowCalendar}
         />
       )}
 
-      <AddNewExpense ref={bottomSheetRef} currentDate={currentDate.use}/>
+      {/*New expense bottom sheet UI component*/}
+      <AddNewExpense ref={bottomSheetRef} currentDate={currentDate}/>
+
+      {/*Add new expense UI button*/}
       {!showCalendar && (
         <AntDesign
           onPress={handleOpenBottomSheet}

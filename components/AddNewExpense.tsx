@@ -1,13 +1,5 @@
-
-import { ActivityIndicator, Text, TouchableOpacity } from "react-native"
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
+import {ActivityIndicator, Text, TouchableOpacity} from "react-native"
+import React, {forwardRef, useCallback, useMemo, useRef, useState,} from "react"
 import {
   BottomSheetBackdrop,
   BottomSheetModal,
@@ -15,18 +7,22 @@ import {
   BottomSheetView,
   useBottomSheetModal,
 } from "@gorhom/bottom-sheet"
-import RadioGroup, { RadioButtonProps } from "react-native-radio-buttons-group"
+import RadioGroup, {RadioButtonProps} from "react-native-radio-buttons-group"
 import MyToast from "@/utils/MyToast"
+import {useTransactionStore} from "@/zustand/transaction-store";
+import {useAuthStore} from "@/zustand/auth-store";
 
 interface Props {
-  currentDate: string
+  currentDate: Date
 }
 
 type Ref = BottomSheetModal
 const snapPoints = ["50%", "75%"]
 
-const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
-  const { dismiss } = useBottomSheetModal()
+const AddNewExpense = forwardRef<Ref, Props>(({currentDate}, ref) => {
+  const {dismiss} = useBottomSheetModal()
+  const {user} = useAuthStore()
+  const {createTransaction} = useTransactionStore()
 
   const loading = false
 
@@ -35,13 +31,13 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
 
   const [newEntry, setNewEntry] = useState<{
     amount: number
-    mode: "online" | "cash"
-    type: "+" | "-"
+    mode: "online" | "offline"
+    type: "income" | "expense"
     reason: string
   }>({
     amount: 0,
     mode: "online",
-    type: "+",
+    type: "income",
     reason: "",
   })
 
@@ -54,9 +50,9 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
         color: "#2c2c2c",
       },
       {
-        id: "cash",
+        id: "offline",
         label: "Cash",
-        value: "cash",
+        value: "offline",
         color: "#2c2c2c",
       },
     ],
@@ -66,15 +62,15 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
   const typeButtons: RadioButtonProps[] = useMemo(
     () => [
       {
-        id: "+",
+        id: "income",
         label: "Income",
-        value: "+",
+        value: "income",
         color: "#2c2c2c",
       },
       {
-        id: "-",
+        id: "expense",
         label: "Expense",
-        value: "-",
+        value: "expense",
         color: "#2c2c2c",
       },
     ],
@@ -94,14 +90,14 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
 
   // common fn to update state
   const handleNewData = (key: string, val: any) =>
-    setNewEntry((prev) => ({ ...prev, [key]: val }))
+    setNewEntry((prev) => ({...prev, [key]: val}))
 
   // fn to reset data
   const resetData = () => {
     setNewEntry({
       amount: 0,
       mode: "online",
-      type: "+",
+      type: "income",
       reason: "",
     })
   }
@@ -122,16 +118,24 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
     }
 
     const newData = {
-      ...newEntry,
-      date: currentDate,
-      reason: reasonRef.current,
-      amount: amountRef.current,
+      txn_date: currentDate.toISOString().split('T')[0],
+      txn_reason: reasonRef.current,
+      txn_amount: amountRef.current,
+      txn_mode: newEntry.mode,
+      txn_type: newEntry.type,
     }
 
-    resetData()
-    reasonRef.current = ""
-    amountRef.current = 0
+    const res = await createTransaction(newData, user.id)
+
+    if (res) {
+      resetData()
+      reasonRef.current = ""
+      amountRef.current = 0
+    } else {
+      MyToast("error", "Error creating transaction")
+    }
     dismiss()
+
   }
 
 
@@ -143,8 +147,8 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
       snapPoints={snapPoints}
       enablePanDownToClose
       backdropComponent={renderBackdrop}
-      handleIndicatorStyle={{ backgroundColor: "#5a9bd5", marginTop: 10 }}
-      backgroundStyle={{ backgroundColor: "#fafaf8" }}
+      handleIndicatorStyle={{backgroundColor: "#5a9bd5", marginTop: 10}}
+      backgroundStyle={{backgroundColor: "#fafaf8"}}
     >
       <BottomSheetView className="pt-8 pb-60 flex-1 items-center gap-5">
         <Text className="font-gb text-4xl text-dark_slate">Add New Expense</Text>
@@ -188,7 +192,7 @@ const AddNewExpense = forwardRef<Ref, Props>(({ currentDate }, ref) => {
           className="bg-blue w-1/2 px-5 py-2 rounded-full items-center"
         >
           {loading ? (
-            <ActivityIndicator color="#fafaf8" className="py-0.5" />
+            <ActivityIndicator color="#fafaf8" className="py-0.5"/>
           ) : (
             <Text className="font-gsb text-xl text-soft_white tracking-wide">Add Data</Text>
           )}

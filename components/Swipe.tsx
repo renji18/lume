@@ -1,4 +1,3 @@
-
 import {router} from "expo-router"
 import React, {useState} from "react"
 import {View} from "react-native"
@@ -13,7 +12,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
-// import {useAuthStore} from "@/zustand/auth-store";
+import {useAuthStore} from "@/zustand/auth-store";
 
 const BUTTON_WIDTH = 350
 const BUTTON_HEIGHT = 100
@@ -24,7 +23,7 @@ const H_WAVE_RANGE = SWIPEABLE_DIMENSIONS + 2 * BUTTON_PADDING
 const H_SWIPE_RANGE = BUTTON_WIDTH - 2 * BUTTON_PADDING - SWIPEABLE_DIMENSIONS
 
 const Swipe = () => {
-  // const {user} = useAuthStore()
+  const {user} = useAuthStore()
   const [toggled, setToggled] = useState<boolean>(false)
 
   const X = useSharedValue(0)
@@ -50,7 +49,7 @@ const Swipe = () => {
         runOnJS(setToggled)(false)
       } else {
         X.value = withSpring(H_SWIPE_RANGE)
-        if (false) {
+        if (user) {
           runOnJS(router.push)("/(tabs)/expense")
         } else {
           runOnJS(router.push)("/(auth)/sign-in")

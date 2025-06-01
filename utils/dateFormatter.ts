@@ -7,11 +7,6 @@ export function uiDateFormatter(date: Date) {
   })
 }
 
-// new Date("2025-02-28") → "28/02/2025"
-export function useDateFormatter(date: Date) {
-  return date.toLocaleDateString("en-GB")
-}
-
 // "28/02/2025" → new Date(2025, 1, 28)
 export function getDateJs(date: string) {
   const [day, month, year] = date.split("/").map(Number)
