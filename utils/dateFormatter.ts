@@ -12,3 +12,21 @@ export function getDateJs(date: string) {
   const [day, month, year] = date.split("/").map(Number)
   return new Date(year, month - 1, day)
 }
+
+export function getDayOfWeek(dayNumber: number): string {
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ]
+
+  if (dayNumber < 0 || dayNumber > 6) {
+    throw new Error("Day number must be between 0 (Sunday) and 6 (Saturday).")
+  }
+
+  return days[dayNumber]
+}
