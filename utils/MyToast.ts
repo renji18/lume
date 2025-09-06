@@ -9,7 +9,8 @@ const MyToast = (type: "success" | "error" | "info", msg: string) => {
       fontFamily: "gsb",
       color: "#233337",
     },
-    topOffset: 60,
+    position: "bottom",
+    avoidKeyboard: false,
   })
 }
 
