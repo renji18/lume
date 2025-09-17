@@ -98,7 +98,7 @@ const Expense = () => {
       {!showCalendar && (
         <AntDesign
           onPress={handleOpenBottomSheet}
-          name="pluscircle"
+          name="plus-circle"
           size={50}
           color="#2c2c2c"
           className="absolute rounded-full bottom-5 right-5 z-20"

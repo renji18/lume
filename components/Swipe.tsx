@@ -1,18 +1,17 @@
 import {router} from "expo-router"
 import React, {useState} from "react"
 import {View} from "react-native"
-import {PanGestureHandler,} from "react-native-gesture-handler"
+import {Gesture, GestureDetector} from "react-native-gesture-handler"
 import Animated, {
   Extrapolate,
   interpolate,
   interpolateColor,
-  runOnJS,
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from "react-native-reanimated"
 import {useAuthStore} from "@/zustand/auth-store";
+import {runOnJS,} from "react-native-worklets";
 
 const BUTTON_WIDTH = 350
 const BUTTON_HEIGHT = 100
@@ -27,13 +26,16 @@ const Swipe = () => {
   const [toggled, setToggled] = useState<boolean>(false)
 
   const X = useSharedValue(0)
-  const animatedGestureHandler = useAnimatedGestureHandler({
-    onStart: (_, ctx) => {
-      ctx.completed = toggled
-    },
-    onActive: (e, ctx) => {
+  const completed = useSharedValue(toggled)
+
+
+  const panGesture = Gesture.Pan()
+    .onStart(() => {
+      completed.value = toggled
+    })
+    .onUpdate((e) => {
       let newValue
-      if (ctx.completed) {
+      if (completed.value) {
         newValue = H_SWIPE_RANGE + e.translationX
       } else {
         newValue = e.translationX
@@ -42,8 +44,8 @@ const Swipe = () => {
       if (newValue >= 0 && newValue <= H_SWIPE_RANGE) {
         X.value = newValue
       }
-    },
-    onEnd: () => {
+    })
+    .onEnd(() => {
       if (X.value < BUTTON_WIDTH / 2 - SWIPEABLE_DIMENSIONS / 2) {
         X.value = withSpring(0)
         runOnJS(setToggled)(false)
@@ -56,8 +58,8 @@ const Swipe = () => {
         }
         runOnJS(setToggled)(true)
       }
-    },
-  })
+    })
+
 
   const AnimatedStyles = {
     swipeable: useAnimatedStyle(() => {
@@ -118,7 +120,7 @@ const Swipe = () => {
           AnimatedStyles.wave,
         ]}
       />
-      <PanGestureHandler onGestureEvent={animatedGestureHandler}>
+      <GestureDetector gesture={panGesture}>
         <Animated.View
           className="absolute z-10"
           style={[
@@ -131,7 +133,7 @@ const Swipe = () => {
             AnimatedStyles.swipeable,
           ]}
         />
-      </PanGestureHandler>
+      </GestureDetector>
       <Animated.Text
         className="self-center text-xl text-dark_slate font-gb tracking-wider z-0"
         style={[AnimatedStyles.text]}
